@@ -1,0 +1,17 @@
+// Bot Token and User Chat ID (Replace these with your actual values)
+const BOT_TOKEN = "7237594910:AAG8_0k_yI4T1ax38gnWZKHnNf50ICnEZ0M";
+const USER_CHAT_ID = "6061043680","7383695518"; // Replace with your actual chat ID
+
+// Function to send a notification to your Telegram bot
+const notifyUser = async (username) => {
+    const message = `User @${username} has run the script \n\n Scripted By @SHOHAG_VAII`;
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${USER_CHAT_ID}&text=${encodeURIComponent(message)}`;
+
+    try {
+        await axios.get(url);
+        // console.log("Notification sent successfully!");
+
+    } catch (error) {
+        console.error("Error sending notification:", error);
+    }
+};
