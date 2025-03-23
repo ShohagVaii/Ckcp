@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak - প্রথম শুভেচ্ছা</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f0f8ff, #e6ffe6);
+            color: #333;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-top: 20px;
+            color: #228b22;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        input {
+            width: 300px;
+            padding: 10px;
+            margin: 20px;
+            border: 2px solid #228b22;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #228b22;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1c7a1c;
+        }
+        .greeting-card {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border: 2px solid #228b22;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .greeting-card h2 {
+            font-size: 2rem;
+            color: #228b22;
+        }
+        .greeting-card p {
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .countdown {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #228b22;
+        }
+        .share-options {
+            margin-top: 20px;
+            display: none;
+        }
+        .share-options a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #228b22;
+            font-size: 1.2rem;
+        }
+        footer {
+            margin-top: 50px;
+            padding: 10px;
+            background-color: #228b22;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Eid Mubarak - প্রথম শুভেচ্ছা</h1>
+        <div class="countdown" id="countdown"></div>
+        <input type="text" id="name" placeholder="আপনার নাম লিখুন...">
+        <button onclick="generateGreeting()">গ্রিটিং কার্ড তৈরি করুন</button>
+
+        <div id="greeting-card" class="greeting-card">
+            <h2>Eid Mubarak!</h2>
+            <p id="greeting-message"></p>
+        </div>
+
+        <div id="share-options" class="share-options">
+            <p>এই লিংকটি শেয়ার করুন:</p>
+            <input type="text" id="share-link" readonly>
+            <a href="#" onclick="copyLink()">লিংক কপি করুন</a>
+            <a href="#" onclick="shareOnSocialMedia()">সোশ্যাল মিডিয়ায় শেয়ার করুন</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made with ❤️ by Shohag Vaii</p>
+    </footer>
+
+    <script>
+        // কাউন্টডাউন টাইমার সেট করুন
+        const countdownDate = new Date("2025-03-23T00:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = `
+                ${days} দিন ${hours} ঘণ্টা ${minutes} মিনিট ${seconds} সেকেন্ড
+            `;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "Eid Mubarak!";
+            }
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        // গ্রিটিং কার্ড তৈরি করার ফাংশন
+        function generateGreeting() {
+            const name = document.getElementById("name").value;
+            if (name.trim() === "") {
+                alert("দয়া করে আপনার নাম লিখুন!");
+                return;
+            }
+
+            const greetingMessage = `প্রিয় ${name}, Eid Mubarak! আল্লাহ আপনার জীবনকে সুখ, শান্তি এবং সমৃদ্ধিতে ভরিয়ে দিন। ❤️`;
+            document.getElementById("greeting-message").innerText = greetingMessage;
+            document.getElementById("greeting-card").style.display = "block";
+
+            // শেয়ার অপশন দেখান
+            const shareLink = `${window.location.href}?name=${encodeURIComponent(name)}`;
+            document.getElementById("share-link").value = shareLink;
+            document.getElementById("share-options").style.display = "block";
+        }
+
+        // লিংক কপি করার ফাংশন
+        function copyLink() {
+            const shareLink = document.getElementById("share-link");
+            shareLink.select();
+            document.execCommand("copy");
+            alert("লিংক কপি করা হয়েছে!");
+        }
+
+        // সোশ্যাল মিডিয়ায় শেয়ার করার ফাংশন
+        function shareOnSocialMedia() {
+            const shareLink = document.getElementById("share-link").value;
+            const shareText = `Eid Mubarak! এই সুন্দর গ্রিটিং কার্ডটি দেখুন: ${shareLink}`;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`, "_blank");
+        }
+
+        // URL থেকে নাম পড়ে গ্রিটিং কার্ড দেখান
+        const urlParams = new URLSearchParams(window.location.search);
+        const nameFromUrl = urlParams.get("name");
+        if (nameFromUrl) {
+            document.getElementById("name").value = nameFromUrl;
+            generateGreeting();
+        }
+    </script>
+
+</body>
+</html>
